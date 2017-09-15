@@ -22,14 +22,14 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>clerezza</artifactId>
-        <groupId>org.apache.clerezza</groupId>
-        <version>7</version>
-        <relativePath>../../../parent</relativePath>
+        <groupId>org.wymiwyg</groupId>
+        <artifactId>wymiwyg</artifactId>
+        <version>0.9.8</version>
+        <relativePath></relativePath>
     </parent>
     <groupId>org.wymiwyg.clerezza</groupId>
     <artifactId>rdf.jena.facade</artifactId>
-    <packaging>bundle</packaging>
+    <packaging>jar</packaging>
     <version>2.0.0-SNAPSHOT</version>
     <name>Clerezza - RDF - Jena - Facade: Jena API on Clerezza RDF Commons</name>
     <description>An implementation of the Jena API on top of Clerezza RDF Commons, allows to
@@ -64,6 +64,7 @@
         <dependency>
             <groupId>org.wymiwyg</groupId>
             <artifactId>wymiwyg-commons-core</artifactId>
+            <version>0.8</version>
         </dependency>   
         <dependency>
             <groupId>org.apache.jena</groupId>
@@ -72,6 +73,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
