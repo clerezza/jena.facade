@@ -99,8 +99,9 @@
             </plugin>
         </plugins>
     </build>
-
-  <scm>
-    <tag>201508-1</tag>
-  </scm>
+    <scm>
+        <developerConnection>scm:git:git@github.com:clerezza/jena.facade.git</developerConnection>
+        <connection>scm:git:https://github.com/clerezza/jena.facade.git</connection>
+        <url>https://github.com/clerezza/jena.facade</url>
+    </scm>
 </project>
