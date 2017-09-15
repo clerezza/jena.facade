@@ -18,11 +18,10 @@
  */
 package org.apache.clerezza.rdf.jena.facade;
 
-import com.hp.hpl.jena.graph.Node;
-import com.hp.hpl.jena.graph.TripleMatch;
-import com.hp.hpl.jena.graph.impl.GraphBase;
-import com.hp.hpl.jena.mem.TrackingTripleIterator;
-import com.hp.hpl.jena.util.iterator.ExtendedIterator;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.impl.GraphBase;
+import org.apache.jena.mem.TrackingTripleIterator;
+import org.apache.jena.util.iterator.ExtendedIterator;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -38,7 +37,7 @@ import org.wymiwyg.commons.util.collections.BidiMap;
 import org.wymiwyg.commons.util.collections.BidiMapImpl;
 
 /**
- * This class implements {@link com.hp.hpl.jena.graph.Graph} basing
+ * This class implements {@link org.apache.jena.graph.Graph} basing
  * on a {@link org.apache.clerezza.rdf.core.TripleCollection}. A <code>JenaGraph</code>
  * can be instanciated using mutable <code>TripleCollection</code>s
  * (i.e. <code>MGraph</code>S) as well as immutable ones (i.e. <code>Graph</code>),
@@ -48,12 +47,12 @@ import org.wymiwyg.commons.util.collections.BidiMapImpl;
  * underlying <code>TripleCollection</code>.
  *
  * Typically an instance of this class is passed as argument
- * to {@link com.hp.hpl.jena.rdf.model.ModelFactory#createModelForGraph} to
+ * to {@link org.apache.jena.rdf.model.ModelFactory#createModelForGraph} to
  * get a <code>Model</code>.
  *
  * @author reto
  */
-public class JenaGraph extends GraphBase implements com.hp.hpl.jena.graph.Graph {
+public class JenaGraph extends GraphBase implements org.apache.jena.graph.Graph {
 
 
 
@@ -69,21 +68,21 @@ public class JenaGraph extends GraphBase implements com.hp.hpl.jena.graph.Graph 
     }
 
     @Override
-    public void performAdd(com.hp.hpl.jena.graph.Triple triple) {
+    public void performAdd(org.apache.jena.graph.Triple triple) {
         graph.add(jena2TriaUtil.convertTriple(triple));
     }
 
     @Override
-    public void performDelete(com.hp.hpl.jena.graph.Triple triple) {
+    public void performDelete(org.apache.jena.graph.Triple triple) {
         Triple clerezzaTriple = jena2TriaUtil.convertTriple(triple);
         if (clerezzaTriple != null) {
             graph.remove(clerezzaTriple);
         }
     }
 
-    private Iterator<com.hp.hpl.jena.graph.Triple> convert(
+    private Iterator<org.apache.jena.graph.Triple> convert(
             final Iterator<Triple> base) {
-        return new Iterator<com.hp.hpl.jena.graph.Triple>() {
+        return new Iterator<org.apache.jena.graph.Triple>() {
 
             Triple lastReturned = null;
 
@@ -93,7 +92,7 @@ public class JenaGraph extends GraphBase implements com.hp.hpl.jena.graph.Graph 
             }
 
             @Override
-            public com.hp.hpl.jena.graph.Triple next() {
+            public org.apache.jena.graph.Triple next() {
                 Triple baseNext = base.next();
                 lastReturned = baseNext;
                 return (baseNext == null) ? null : tria2JenaUtil.convertTriple(baseNext, true);
@@ -112,30 +111,30 @@ public class JenaGraph extends GraphBase implements com.hp.hpl.jena.graph.Graph 
      * @param m
      * @return TripleCollection
      */
-    private Iterator<Triple> filter(TripleMatch m) {
+    private Iterator<Triple> filter(org.apache.jena.graph.Triple m) {
         BlankNodeOrIRI subject = null;
         IRI predicate = null;
         RDFTerm object = null;
         if (m.getMatchSubject() != null) {
-            if (m.getMatchSubject().isLiteral()) {
+            if (m.getSubject().isLiteral()) {
                 return Collections.EMPTY_SET.iterator();
             }
-            subject = jena2TriaUtil.convertNonLiteral(m.getMatchSubject());
+            subject = jena2TriaUtil.convertNonLiteral(m.getSubject());
             if (subject == null) {
                 return Collections.EMPTY_SET.iterator();
             }
         }
         if (m.getMatchObject() != null) {
-            object = jena2TriaUtil.convertJenaNode2Resource(m.getMatchObject());
+            object = jena2TriaUtil.convertJenaNode2Resource(m.getObject());
             if (object == null) {
                 return Collections.EMPTY_SET.iterator();
             }
         }        
         if (m.getMatchPredicate() != null) {
-            if (!m.getMatchPredicate().isURI()) {
+            if (!m.getPredicate().isURI()) {
                 return Collections.EMPTY_SET.iterator();
             }
-            predicate = jena2TriaUtil.convertJenaUri2UriRef(m.getMatchPredicate());
+            predicate = jena2TriaUtil.convertJenaUri2UriRef(m.getPredicate());
         }
 
         try {
@@ -150,12 +149,12 @@ public class JenaGraph extends GraphBase implements com.hp.hpl.jena.graph.Graph 
     }
 
     @Override
-    protected ExtendedIterator graphBaseFind(TripleMatch m) {
+    protected ExtendedIterator<org.apache.jena.graph.Triple> graphBaseFind(org.apache.jena.graph.Triple m) {
         return new TrackingTripleIterator(convert(filter(m)));
     }
 
     //not yet @Override
-    protected ExtendedIterator<com.hp.hpl.jena.graph.Triple> graphBaseFind(com.hp.hpl.jena.graph.Triple triple) {
+    /*protected ExtendedIterator<org.apache.jena.graph.Triple> graphBaseFind(org.apache.jena.graph.Triple triple) {
         return new TrackingTripleIterator(convert(filter(triple)));
-    }
+    }*/
 }

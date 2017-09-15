@@ -19,19 +19,19 @@
 package org.apache.clerezza.rdf.facade.blackbox;
 
 
-import com.hp.hpl.jena.datatypes.xsd.impl.XMLLiteralType;
-import com.hp.hpl.jena.rdf.model.Literal;
+import org.apache.jena.datatypes.xsd.impl.XMLLiteralType;
+import org.apache.jena.rdf.model.Literal;
 import junit.framework.Assert;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.RSIterator;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.hp.hpl.jena.vocabulary.RDFS;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.RSIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 import java.io.StringWriter;
 import org.junit.Test;
 import org.apache.clerezza.commons.rdf.IRI;
@@ -53,7 +53,7 @@ public class TestBasics {
         IRI uri = new IRI(uriString);
         Graph mGraph = new SimpleGraph();
         mGraph.add(new TripleImpl(uri, uri, new PlainLiteralImpl("bla bla")));
-        com.hp.hpl.jena.graph.Graph graph = new JenaGraph(mGraph);
+        org.apache.jena.graph.Graph graph = new JenaGraph(mGraph);
         Model model = ModelFactory.createModelForGraph(graph);
         StringWriter writer = new StringWriter();
         model.write(writer);
@@ -65,14 +65,14 @@ public class TestBasics {
         IRI uri = new IRI("http://example.org/foo#bar");
         Graph mGraph = new SimpleGraph();
         mGraph.add(new TripleImpl(uri, uri, new PlainLiteralImpl("bla bla")));
-        com.hp.hpl.jena.graph.Graph graph = new JenaGraph(mGraph);
+        org.apache.jena.graph.Graph graph = new JenaGraph(mGraph);
         Assert.assertEquals(1, graph.size());
     }
 
     @Test
     public void modifyingJenaGraph() {
         Graph mGraph = new SimpleGraph();
-        com.hp.hpl.jena.graph.Graph graph = new JenaGraph(mGraph);
+        org.apache.jena.graph.Graph graph = new JenaGraph(mGraph);
         Model model = ModelFactory.createModelForGraph(graph);
         model.add(RDFS.Class, RDF.type, RDFS.Class);
         Assert.assertEquals(1, mGraph.size());
@@ -81,7 +81,7 @@ public class TestBasics {
     @Test
     public void typedLiterals() {
         Graph mGraph = new SimpleGraph();
-        com.hp.hpl.jena.graph.Graph graph = new JenaGraph(mGraph);
+        org.apache.jena.graph.Graph graph = new JenaGraph(mGraph);
         Model model = ModelFactory.createModelForGraph(graph);
         Literal typedLiteral = model.createTypedLiteral("<elem>foo</elem>", XMLLiteralType.theXMLLiteralType);
         model.add(RDFS.Class, RDFS.label, typedLiteral);
@@ -95,7 +95,7 @@ public class TestBasics {
     @Test
     public void reifications() {
         Graph mGraph = new SimpleGraph();
-        com.hp.hpl.jena.graph.Graph graph = new JenaGraph(mGraph);
+        org.apache.jena.graph.Graph graph = new JenaGraph(mGraph);
         //Model memModel = ModelFactory.createDefaultModel();
         Model model = ModelFactory.createModelForGraph(graph);
         model.add(RDFS.Resource, RDF.type, RDFS.Resource);
