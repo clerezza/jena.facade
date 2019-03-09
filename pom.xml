@@ -30,7 +30,7 @@
     <groupId>org.wymiwyg.clerezza</groupId>
     <artifactId>rdf.jena.facade</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
     <name>Clerezza - RDF - Jena - Facade: Jena API on Clerezza RDF Commons</name>
     <description>An implementation of the Jena API on top of Clerezza RDF Commons, allows to
         run code written against the Jena API on a source exposing the Clerezza Commons API .</description>
@@ -47,19 +47,19 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>org.apache.clerezza.commons-rdf</groupId>
-            <artifactId>commons-rdf-api</artifactId>
-            <version>0.2</version>
+            <groupId>org.apache.clerezza</groupId>
+            <artifactId>api</artifactId>
+            <version>8-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.clerezza.commons-rdf</groupId>
-            <artifactId>commons-rdf-impl-utils</artifactId>
-            <version>0.2</version>
+            <groupId>org.apache.clerezza</groupId>
+            <artifactId>api.impl</artifactId>
+            <version>8-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.wymiwyg.clerezza</groupId>
             <artifactId>rdf.jena.commons</artifactId>
-            <version>2.0.0</version>
+            <version>2.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.wymiwyg</groupId>
@@ -105,4 +105,8 @@
         <url>https://github.com/clerezza/jena.facade</url>
       <tag>HEAD</tag>
   </scm>
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
 </project>
