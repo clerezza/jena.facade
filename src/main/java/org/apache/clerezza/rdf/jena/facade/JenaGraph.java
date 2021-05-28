@@ -1,50 +1,45 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor  license  agreements.  See the NOTICE file distributed
+ * with this work  for  additional  information  regarding  copyright
+ * ownership.  The ASF  licenses  this file to you under  the  Apache
+ * License, Version 2.0 (the "License"); you may not  use  this  file
+ * except in compliance with the License.  You may obtain  a copy  of
+ * the License at
  *
  *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Unless  required  by  applicable law  or  agreed  to  in  writing,
+ * software  distributed  under  the  License  is  distributed  on an
+ * "AS IS"  BASIS,  WITHOUT  WARRANTIES  OR  CONDITIONS  OF ANY KIND,
+ * either  express  or implied.  See  the License  for  the  specific
+ * language governing permissions and limitations under  the License.
  */
 package org.apache.clerezza.rdf.jena.facade;
 
+import org.apache.clerezza.*;
+import org.apache.clerezza.rdf.jena.commons.Jena2TriaUtil;
+import org.apache.clerezza.rdf.jena.commons.Tria2JenaUtil;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.impl.GraphBase;
 import org.apache.jena.mem.TrackingTripleIterator;
 import org.apache.jena.util.iterator.ExtendedIterator;
+import org.wymiwyg.commons.util.collections.BidiMap;
+import org.wymiwyg.commons.util.collections.BidiMapImpl;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import org.apache.clerezza.commons.rdf.BlankNode;
-import org.apache.clerezza.commons.rdf.BlankNodeOrIRI;
-import org.apache.clerezza.commons.rdf.IRI;
-import org.apache.clerezza.commons.rdf.RDFTerm;
-import org.apache.clerezza.commons.rdf.Triple;
-import org.apache.clerezza.rdf.jena.commons.Jena2TriaUtil;
-import org.apache.clerezza.rdf.jena.commons.Tria2JenaUtil;
-import org.wymiwyg.commons.util.collections.BidiMap;
-import org.wymiwyg.commons.util.collections.BidiMapImpl;
-
 /**
  * This class implements {@link org.apache.jena.graph.Graph} basing
- * on a {@link org.apache.clerezza.rdf.core.TripleCollection}. A <code>JenaGraph</code>
- * can be instanciated using mutable <code>TripleCollection</code>s
- * (i.e. <code>MGraph</code>S) as well as immutable ones (i.e. <code>Graph</code>),
+ * on a {@link org.apache.clerezza.Graph}. A <code>JenaGraph</code>
+ * can be instantiated using mutable <code>Graph</code>s
+ * as well as immutable ones (i.e. <code>ImmutableGraph</code>s),
  * an attempt to add or remove triples to a <code>JenaGraph</code> based on
- * an immutable <code>TripleCollection</code> will result in
+ * an immutable <code>ImmutableGraph</code> will result in
  * a <code>UnsupportedOperationException</code> being thrown by the
- * underlying <code>TripleCollection</code>.
+ * underlying <code>ImmutableGraph</code>.
  *
  * Typically an instance of this class is passed as argument
  * to {@link org.apache.jena.rdf.model.ModelFactory#createModelForGraph} to
@@ -53,17 +48,14 @@ import org.wymiwyg.commons.util.collections.BidiMapImpl;
  * @author reto
  */
 public class JenaGraph extends GraphBase implements org.apache.jena.graph.Graph {
-
-
-
-    final org.apache.clerezza.commons.rdf.Graph graph;
+    final org.apache.clerezza.Graph graph;
     final BidiMap<BlankNode, Node> tria2JenaBNodes = new BidiMapImpl<BlankNode, Node>();
     final Jena2TriaUtil jena2TriaUtil =
             new Jena2TriaUtil(tria2JenaBNodes.inverse());
     final Tria2JenaUtil tria2JenaUtil =
             new Tria2JenaUtil(tria2JenaBNodes);
 
-    public JenaGraph(org.apache.clerezza.commons.rdf.Graph graph) {
+    public JenaGraph(org.apache.clerezza.Graph graph) {
         this.graph = graph;
     }
 
@@ -106,10 +98,11 @@ public class JenaGraph extends GraphBase implements org.apache.jena.graph.Graph 
     }
 
     /**
-     * An iterator (over a filtered TripleCollection) that can return its next element as a triple. As parameter a tripleMatch is required.
+     * An iterator (over a filtered Graph) that can return its next element as a triple.
+     * As parameter a tripleMatch is required.
      * Triple matches are defined by subject, predicate, and object.
      * @param m
-     * @return TripleCollection
+     * @return Graph
      */
     private Iterator<Triple> filter(org.apache.jena.graph.Triple m) {
         BlankNodeOrIRI subject = null;
