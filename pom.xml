@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.wymiwyg</groupId>
         <artifactId>wymiwyg</artifactId>
-        <version>0.9.8</version>
+        <version>0.9.9</version>
         <relativePath />
     </parent>
     <groupId>org.wymiwyg.clerezza</groupId>
